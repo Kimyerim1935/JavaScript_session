@@ -1,0 +1,126 @@
+<html>
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+<main></main>
+
+<script>
+  const data1 = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: false,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: false,
+    },
+    {
+      text: 'TS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'TS 복습하기',
+      isCompleted: true,
+    },
+  ];
+
+  const data2 = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: true,
+    },
+  ];
+
+  // TodoList 컴포넌트 정의
+  class TodoListClass {
+    $element = null;
+    state = null;
+
+    constructor({ $target, initialState }) {
+      this.$element = document.createElement('ul');
+      this.state = initialState;
+
+      this.render();
+
+      $target.appendChild(this.$element);
+    }
+
+    render() {
+      this.$element.innerHTML = this.state
+              .map(
+                      ({ isCompleted, text }) =>
+                              `<li>${isCompleted ? '[완료] ' : ''}${text}</li>`
+              )
+              .join('');
+    }
+  }
+
+  function TodoList({ $target, initialState }) {
+    if (!new.target) {
+      throw new Error('new 없다!!');
+    }
+
+    this.$element = document.createElement('ul');
+    $target.appendChild(this.$element);
+
+    this.state = initialState;
+
+    this.validate = () => {
+      if (!this.state || !Array.isArray(this.state)) {
+        throw new Error('state가 없다!!');
+      }
+    };
+
+    this.validate();
+    this.setState = (nextState) => {
+      this.state = nextState;
+      this.validate();
+      this.render();
+    };
+
+    this.render = () => {
+      this.$element.innerHTML = this.state
+              .map(
+                      ({ isCompleted, text }) =>
+                              `<li>${isCompleted ? '[완료] ' : ''}${text}</li>`
+              )
+              .join('');
+    };
+
+    this.render();
+  }
+
+  const $target = document.querySelector('main');
+
+  const todoList1 = new TodoListClass({
+    $target,
+    initialState: data1,
+  });
+
+  const todoList2 = new TodoList({
+    $target,
+    initialState: data2,
+  });
+
+  const todoList3 = new TodoList({
+    $target,
+    initialState: [],
+  });
+
+  setTimeout(() => {
+    todoList3.setState([
+      {
+        text: '코딩하기',
+      },
+    ]);
+  }, 5000);
+</script>
+</body>
+</html>
