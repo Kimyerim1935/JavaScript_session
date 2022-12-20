@@ -6,7 +6,6 @@ import { STORAGE_KEY } from './constants.js';
 
 export default function App({ $target, initialState }) {
   this.state = initialState;
-console.log(this.state)
   this.setState = (nextState) => {
     this.state = nextState;
 
