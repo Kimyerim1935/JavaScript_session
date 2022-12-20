@@ -14,7 +14,8 @@ export default function TodoList({
       .map(
         ({ isCompleted, text }, index) =>
           `<li data-index="${index}">
-           ${isCompleted ? `<s>${text}</s>`: `${text}`} 
+           ${isCompleted ? '[완료]': ''}
+           ${text} 
             <button>🗑️</button>
           </li>`
       )
