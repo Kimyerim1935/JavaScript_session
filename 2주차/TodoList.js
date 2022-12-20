@@ -1,33 +1,55 @@
-function TodoList({ $target, initialState }) {
-  if (!new.target) {
-    throw new Error('new 없다!!');
-  }
-
+export default function TodoList({
+                                   $target,
+                                   initialState,
+                                   onClick,
+                                   onRemoveClick,
+                                 }) {
   this.$element = document.createElement('ul');
   $target.appendChild(this.$element);
 
   this.state = initialState;
 
-  this.validate = () => {
-    if (!this.state || !Array.isArray(this.state)) {
-      throw new Error('state가 없다!!');
-    }
-  };
-
-  this.validate();
-  this.setState = (nextState) => {
-    this.state = nextState;
-    this.validate();
-    this.render();
-  };
-
-  this.render = () => {
+  this.render = function () {
     this.$element.innerHTML = this.state
       .map(
-        ({ isCompleted, text }) =>
-          `<li>${isCompleted ? '[완료] ' : ''}${text}</li>`
+        ({ isCompleted, text }, index) =>
+          `<li data-index="${index}">
+           ${isCompleted ? `<s>${text}</s>`: `${text}`} 
+            <button>🗑️</button>
+          </li>`
       )
       .join('');
+
+    /* 이벤트 위임을 사용하지 않은 경우
+    this.$element.querySelectorAll('li').forEach(($li, index) => {
+      $li.addEventListener('click', () => onClick(index));
+      $li.querySelector('button').addEventListener('click', (e) => {
+        e.stopPropagation();
+        onRemoveClick(index);
+      });
+    });*/
+  };
+
+  // 이벤트 위임을 사용한 경우
+  this.$element.addEventListener('click', (e) => {
+    const $li = e.target.closest('li');
+
+    if (!$li) {
+      return;
+    }
+
+    const index = $li.dataset.index;
+
+    if (e.target.tagName === 'LI') {
+      onClick(index);
+    } else if (e.target.tagName === 'BUTTON') {
+      onRemoveClick(index);
+    }
+  });
+
+  this.setState = function (nextState) {
+    this.state = nextState;
+    this.render();
   };
 
   this.render();
