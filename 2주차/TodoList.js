@@ -8,16 +8,8 @@ export default function TodoList({ $target, initialState }) {
 
   this.state = initialState;
 
-  this.validate = () => {
-    if (!this.state || !Array.isArray(this.state)) {
-      throw new Error('state가 없다!!');
-    }
-  };
-
-  this.validate();
   this.setState = (nextState) => {
     this.state = nextState;
-    this.validate();
     this.render();
   };
 
