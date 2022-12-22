@@ -1,6 +1,6 @@
-import TodoList from './TodoList.js';
+import App from './App.js';
 
-const data1 = [
+const initialState = [
   {
     text: 'JS 공부하기',
     isCompleted: false,
@@ -11,25 +11,16 @@ const data1 = [
   },
   {
     text: 'TS 공부하기',
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     text: 'TS 복습하기',
-    isCompleted: true,
+    isCompleted: false,
   },
 ];
 
 const $target = document.querySelector('main');
 
-const todoList = new TodoList({
-  $target,
-  initialState: data1,
+new App({
+  $target, initialState
 });
-
-setTimeout(() => {
-  todoList.setState([
-    {
-      text: '코딩하기',
-    },
-  ]);
-}, 5000);
