@@ -1,5 +1,6 @@
 import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
+import TodoCount from "./TodoCount.js";
 
 export default function App ({$target, initialState}) {
   this.state = initialState;
@@ -8,6 +9,7 @@ export default function App ({$target, initialState}) {
     this.state = nextState;
 
     todoList.setState(this.state)
+    todoCount.setState(this.state)
   }
 
 
@@ -30,4 +32,8 @@ export default function App ({$target, initialState}) {
     initialState: this.state,
   });
 
+  const todoCount = new TodoCount({
+    $target,
+    initialState: this.state
+  })
 }
