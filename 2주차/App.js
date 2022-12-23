@@ -30,6 +30,18 @@ export default function App ({$target, initialState}) {
   const todoList = new TodoList({
     $target,
     initialState: this.state,
+    handleTodoState: (index) => {
+      const nextState = [...this.state];
+      nextState[index].isCompleted = !nextState[index].isCompleted;
+
+      this.setState(nextState)
+    },
+    handleDeleteState: (index) => {
+      const nextState = [...this.state];
+      nextState.splice(index, 1);
+
+      this.setState(nextState);
+    },
   });
 
   const todoCount = new TodoCount({
