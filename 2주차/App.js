@@ -1,12 +1,16 @@
 import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
 import TodoCount from "./TodoCount.js";
+import {setItem} from './localStorage.js';
+import {STORAGE_KEY} from "./constants.js";
 
 export default function App ({$target, initialState}) {
   this.state = initialState;
 
   this.setState = (nextState) => {
     this.state = nextState;
+
+    setItem( STORAGE_KEY, this.state);
 
     todoList.setState(this.state)
     todoCount.setState(this.state)
