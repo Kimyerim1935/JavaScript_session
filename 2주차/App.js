@@ -48,4 +48,8 @@ export default function App ({$target, initialState}) {
     $target,
     initialState: this.state
   })
+
+  window.addEventListener('removeAll', () => {
+    this.setState([]);
+  });
 }
