@@ -1,4 +1,5 @@
-export default function SearchInput({$target, onSearch}) {
+export default function SearchInput({$target,initialState, onSearch}) {
+  this.state = initialState;
   this.$element = document.createElement('input');
 
   $target.appendChild(this.$element);
