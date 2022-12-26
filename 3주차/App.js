@@ -1,6 +1,7 @@
 import SearchInput from "./SearchInput.js";
 import SearchResult from './SearchResult.js';
 import {request} from './api.js';
+import debounce from "./debounce.js";
 
 export default function App({$target, initialState}) {
   this.state = initialState;
@@ -14,7 +15,7 @@ export default function App({$target, initialState}) {
   const searchInput = new SearchInput({
     $target,
     initialState: this.state,
-    handleSearch: async (keyword) => {
+    handleSearch: debounce(async (keyword) => {
       try {
         if (keyword.length > 0) {
           const results = await request(`/api/search?keyword=${keyword}`);
@@ -24,7 +25,8 @@ export default function App({$target, initialState}) {
       } catch (e) {
         alert('오류가 발생했습니다')
       }
-    }})
+    })}
+  )
 
   const searchResult = new SearchResult({$target, initialState: this.state})
 
