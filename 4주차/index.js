@@ -1,3 +1,5 @@
+import TodoList from './TodoList.js';
+
 (async function () {
   const $target = document.querySelector('.App')
 
